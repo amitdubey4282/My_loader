@@ -1,26 +1,79 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import Loader from './Loader';
 import './App.css';
+import Tree from "./logo.svg";
 
-function App() {
+const App: React.FC = () => {
+  const [loading, setLoading] = useState<boolean>(true);
+  useEffect(() => {
+    // Simulate an API call or data loading
+    setTimeout(() => {
+      setLoading(false); // Set loading to false when the data is ready
+    }, 5000); // Simulate a 5-second loading time
+  }, []);
+
+  const WithCircleVariant = () => {
+    return (
+      <div className='example-1'>
+        <Loader isLoading={loading} animation="wave" variant='circle'>
+          <img src={Tree} alt="tree" />
+        </Loader>
+      </div>
+    )
+  }
+
+  const WithAnimationVariant = () => {
+    return (
+      <div className='example-2'>
+        <Loader isLoading={loading} animation="wave">
+          <div className='banner'>
+            <h1>Demo For Skeleton </h1>
+          </div>
+          {/* <img src={Tree} height={500} alt="tree"/> */}
+        </Loader>
+      </div>
+    )
+
+  }
+
+  const WithNoAnimation = () => {
+    return (
+      <div className='example-3'>
+        <Loader isLoading={loading} variant="rectangle" animation="none">
+          <p>This is some content loaded after the animation.</p>
+        </Loader>
+      </div>
+    )
+  }
+
+  const WithNoHeight = () => {
+    return (
+      <div>
+        <Loader isLoading={loading}>
+          <div>Welcome to Skeleton Demo</div>
+        </Loader>
+
+      </div>
+    )
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='container'>
+      {/* Below Loader will be called with  variant as circle  */}
+
+      <WithCircleVariant />
+
+      {/* Below Loader will be Called with animation type as wave  */}
+
+
+      <WithAnimationVariant />
+      {/* Below Loader will be Called with no animation type */}
+
+      <WithNoAnimation />
+
+      {/* Below Animation will take the default heights and widths as we are not passing them */}
+      <WithNoHeight />
     </div>
   );
-}
+};
 
 export default App;
